@@ -1,0 +1,98 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "storagename": {
+            "type": "string",
+            "defaultValue": "storageaccount1",
+            "metadata": {
+                "description": "Storage Account Name"
+            }
+        },
+        "sqlservername": {
+            "type": "string",
+            "defaultValue": "sqlServer1",
+            "metadata": {
+                "description": "SQL Server Name"
+            }
+        },
+        "sqladminuser": {
+            "type": "string",
+            "defaultValue": "adminUsername",
+            "metadata": {
+                "description": "SQL Server Admin Account"
+            }
+        },
+        "sqladminpassword": {
+            "type": "string",
+            "defaultValue": "adminPassword",
+            "metadata": {
+                "description": "SQL Admin Password"
+            }
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('storagename')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "location": "[resourceGroup().location]",
+            "kind": "StorageV2",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "isHnsEnabled": true
+            }
+        },
+        {
+            "name": "[parameters('sqlservername')]",
+            "type": "Microsoft.Sql/servers",
+            "apiVersion": "2014-04-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "administratorLogin": "[parameters('sqladminuser')]",
+                "administratorLoginPassword": "[parameters('sqladminpassword')]"
+            },
+            "resources": [
+                {
+                    "type": "firewallRules",
+                    "apiVersion": "2014-04-01",
+                    "dependsOn": [
+                        "[resourceId('Microsoft.Sql/servers', parameters('sqlservername'))]"
+                    ],
+                    "location": "[resourceGroup().location]",
+                    "name": "AllowAllWindowsAzureIps",
+                    "properties": {
+                        "startIpAddress": "0.0.0.0",
+                        "endIpAddress": "0.0.0.0"
+                    }
+                }
+            ]
+        }
+        // How to import database???
+        // {
+        //     "name": "sqlDatabase1Import",
+        //     "type": "Microsoft.Sql/servers/databases/extensions",
+        //     "apiVersion": "2014-04-01",
+        //     "dependsOn": [
+        //         "[resourceId('Microsoft.Sql/servers/databases', 'sqlServer1', 'sqlDatabase1')]"
+        //     ],
+        //     "tags": {
+        //         "displayName": "SQL Database Import for sqlDatabase1"
+        //     },
+        //     "properties": {
+        //         "storageKeyType": "StorageAccessKey",
+        //         "storageKey": "storageKey",
+        //         "storageUri": "bacpacUri",
+        //         "administratorLogin": "adminUsername",
+        //         "administratorLoginPassword": "adminPassword",
+        //         "operationMode": "Import"
+        //     }
+        // }
+    ],
+    "outputs": {}
+}
