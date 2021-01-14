@@ -4,14 +4,14 @@
     "parameters": {
         "storagename": {
             "type": "string",
-            "defaultValue": "wwiimportersdatalake001",
+            "defaultValue": "storageaccount001",
             "metadata": {
                 "description": "Storage Account Name"
             }
         },
         "sqlservername": {
             "type": "string",
-            "defaultValue": "wwi-importers-db-server",
+            "defaultValue": "sqlserver001",
             "metadata": {
                 "description": "SQL Server Name"
             }
@@ -25,7 +25,7 @@
         },
         "sqladminpassword": {
             "type": "string",
-            "defaultValue": "P@ssw0rd!",
+            "defaultValue": "sqladmin",
             "metadata": {
                 "description": "SQL Admin Password"
             }
