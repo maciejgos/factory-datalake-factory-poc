@@ -12,7 +12,7 @@ az storage account create --name $DB_STORAGE_ACCOUNT --resource-group $RESOURCE_
 # Upload backup [TODO]
 
 # Deploy ARM template
-az deployment group create --name Initial --resource-group $RESOURCE_GROUP_NAME --template-file template.json 
+az deployment group create --name Initial --resource-group $RESOURCE_GROUP_NAME --template-file template.json --parameters template.parameters.json
 
 # Create Data Factory [TODO]
 
