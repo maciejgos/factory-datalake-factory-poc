@@ -29,6 +29,13 @@
             "metadata": {
                 "description": "SQL Admin Password"
             }
+        },
+        "factoryname": {
+            "type": "string",
+            "defaultValue": "factoryname",
+            "metadata": {
+                "description": "Data Factory Name"
+            }
         }
     },
     "functions": [],
@@ -72,6 +79,16 @@
                     }
                 }
             ]
+        },
+        {
+            "apiVersion": "2018-06-01",
+            "name": "[parameters('factoryname')]",
+            "location": "[resourceGroup().location]",
+            "type": "Microsoft.DataFactory/factories",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {}
         }
         // How to import database???
         // {
