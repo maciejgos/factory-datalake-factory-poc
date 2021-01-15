@@ -1,0 +1,3 @@
+# Remove terraform state and .terraform files
+*tfstate
+.terraform*
